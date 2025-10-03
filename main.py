@@ -24,8 +24,15 @@ from datetime import datetime, timezone, timedelta
 from typing import Optional, Dict, Any, List
 import stripe
 from dotenv import load_dotenv
-import psycopg2
-from psycopg2.extras import RealDictCursor
+# PostgreSQL imports (conditional)
+try:
+    import psycopg2
+    from psycopg2.extras import RealDictCursor
+    POSTGRES_AVAILABLE = True
+except ImportError:
+    POSTGRES_AVAILABLE = False
+    psycopg2 = None
+    RealDictCursor = None
 import aiofiles
 import uuid
 

@@ -1,0 +1,33 @@
+# Content X Bible - Render Deployment Configuration
+
+services:
+  - type: web
+    name: content-x-bible
+    env: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: python ai-content-studio-production.py
+    healthCheckPath: /health
+    autoDeploy: true
+    repo: https://github.com/RajeshAivengrs/content-x-bible-final.git
+    branch: main
+    rootDir: .
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ELEVENLABS_API_KEY
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: JWT_SECRET
+        value: "content-x-bible-jwt-secret-production"
+      - key: DATABASE_URL
+        value: "sqlite:///./content_x_bible.db"
+      - key: PORT
+        value: "8001"
+      - key: HOST
+        value: "0.0.0.0"
+      - key: DEBUG
+        value: "false"
+      - key: LOG_LEVEL
+        value: "INFO"
